@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Neuro-Study Companion",
+  "version": "2.0.0",
+  "description": "Sous-titres traduits, score de compréhension (caméra) et bouton « Je suis perdu » : explication du point non compris (texte, schéma, courbe, image) + historique.",
+  "permissions": ["storage", "unlimitedStorage", "activeTab"],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://meet.google.com/*",
+    "http://127.0.0.1:5000/*",
+    "http://localhost:5000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*", "https://meet.google.com/*"],
+      "js": ["meet_captions.js", "content.js"],
+      "css": ["calm.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

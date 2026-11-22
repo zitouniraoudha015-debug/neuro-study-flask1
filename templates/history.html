@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neuro-Study · Historique des points non compris</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0f172a; color: #e2e8f0; font: 15px/1.6 system-ui, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: #94a3b8; margin-bottom: 20px; }
+  .bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  button, a.btn { background: #1e293b; color: #e2e8f0; border: 1px solid #475569; border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none; font-size: 13px; }
+  button:hover, a.btn:hover { background: #334155; }
+  .card { background: #1e293b; border: 1px solid #334155; border-left: 4px solid #38bdf8; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+  .card.ok { border-left-color: #22c55e; opacity: .85; }
+  .meta { font-size: 12px; color: #94a3b8; }
+  h2 { font-size: 17px; margin: 4px 0 8px; color: #38bdf8; }
+  h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: #94a3b8; margin: 14px 0 4px; }
+  blockquote { margin: 6px 0; padding: 6px 12px; border-left: 3px solid #475569; color: #cbd5e1; font-style: italic; }
+  .svg svg { max-width: 460px; }
+  img.wiki { max-width: 240px; border-radius: 8px; display: block; }
+  .warn { background: #422006; border: 1px solid #b45309; border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .empty { color: #94a3b8; text-align: center; padding: 48px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Historique des points non compris</h1>
+  <div class="sub">{{ items|length }} point(s) enregistré(s) — chaque clic sur « Je suis perdu » est gardé avec son explication.</div>
+  <div class="bar">
+    <a class="btn" href="/">← Retour à l'app</a>
+    <a class="btn" href="/api/history" target="_blank" rel="noopener">Export JSON</a>
+    <button type="button" onclick="clearAll()">Tout effacer</button>
+  </div>
+
+  {% for e in items %}
+    {% set r = e.result %}
+    <article class="card {{ 'ok' if e.understood }}" id="e-{{ e.id }}">
+      <div class="meta">
+        {{ e.created_at[:16]|replace('T', ' ') }} UTC ·
+        {{ e.source.platform|upper or 'APP' }} · {{ e.source.title or 'Sans titre' }}
+        {% if e.video_time is not none %}· à {{ (e.video_time // 60)|int }}:{{ '%02d' % ((e.video_time % 60)|int) }}{% endif %}
+        {% if e.source.url %}· <a href="{{ e.source.url }}" target="_blank" rel="noopener" style="color:#38bdf8">ouvrir</a>{% endif %}
+      </div>
+      <h2>{{ r.point }}</h2>
+      {% if r.fallback %}<div class="warn">Explication limitée (IA non joignable) : {{ r.error }}</div>{% endif %}
+      {% if r.quote %}<blockquote>« {{ r.quote }} »</blockquote>{% endif %}
+      {% if r.why_hard %}<h3>Pourquoi c'est difficile</h3><div>{{ r.why_hard }}</div>{% endif %}
+      <h3>Explication</h3><div style="white-space:pre-line">{{ r.paragraph }}</div>
+      {% if r.analogy %}<h3>Analogie</h3><div>{{ r.analogy }}</div>{% endif %}
+      {% if r.example %}<h3>Exemple</h3><div>{{ r.example }}</div>{% endif %}
+      {% if r.steps %}<h3>Étapes</h3><ol>{% for s in r.steps %}<li>{{ s }}</li>{% endfor %}</ol>{% endif %}
+      {% if r.formula %}<h3>À retenir</h3><code>{{ r.formula }}</code>{% endif %}
+      {% if r.visual_svg %}<h3>Schéma</h3><div class="svg">{{ r.visual_svg|safe }}</div>{% endif %}
+      {% if r.image %}<h3>Image</h3><img class="wiki" src="{{ r.image }}" alt="{{ r.image_caption }}">{% endif %}
+      {% if r.check and r.check.question %}
+        <h3>Vérifie que tu as compris</h3>
+        <details><summary>{{ r.check.question }}</summary><div>{{ r.check.answer }}</div></details>
+      {% endif %}
+      <div class="bar" style="margin:12px 0 0">
+        <button type="button" onclick="mark('{{ e.id }}', {{ 'false' if e.understood else 'true' }})">{{ '↩ À revoir' if e.understood else '✓ Compris' }}</button>
+        <button type="button" onclick="del('{{ e.id }}')">Supprimer</button>
+      </div>
+    </article>
+  {% else %}
+    <div class="empty">Rien pour l'instant. Pendant une vidéo, appuie sur « Je suis perdu » : le point apparaîtra ici.</div>
+  {% endfor %}
+</main>
+<script>
+  async function mark(id, v) { await fetch(`/api/history/${id}/understood`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({understood: v})}); location.reload(); }
+  async function del(id) { await fetch(`/api/history/${id}`, {method: 'DELETE'}); location.reload(); }
+  async function clearAll() { if (confirm('Effacer tout l\'historique ?')) { await fetch('/api/history/clear', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: '{}'}); location.reload(); } }
+</script>
+</body>
+</html>

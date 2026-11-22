@@ -1,0 +1,8 @@
+flask>=3.0
+python-dotenv>=1.0
+requests>=2.31
+pypdf>=4.0
+gunicorn>=22.0
+youtube-transcript-api>=1.0
+# Optionnel (transcription audio côté serveur, route /api/transcribe) :
+# faster-whisper>=1.0

@@ -1,0 +1,121 @@
+/* Neuro-Study Companion — panneau flottant */
+#neuro-study-sidebar, #neuro-study-sidebar * { box-sizing: border-box; }
+#neuro-study-sidebar [hidden] { display: none !important; }
+#neuro-study-sidebar {
+  position: fixed; top: 72px; right: 16px; width: 372px; max-height: 88vh; overflow-y: auto;
+  background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 14px; padding: 12px;
+  z-index: 2147483000; font: 13px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: left;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .45);
+}
+#neuro-study-sidebar button, #neuro-study-sidebar select, #neuro-study-sidebar summary { font-family: inherit; }
+.ns-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ns-title { font-weight: 700; font-size: 14px; color: #38bdf8; flex: 1; }
+.ns-conn-pill { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.ns-conn-pill.ns-on { background: #14532d; color: #86efac; border: 1px solid #22c55e; }
+.ns-conn-pill.ns-off { background: #450a0a; color: #fca5a5; border: 1px solid #ef4444; }
+.ns-conn-pill.ns-warn-pill { background: #422006; color: #fcd34d; border: 1px solid #f59e0b; }
+.ns-icon-btn { background: #1e293b; color: #e2e8f0; border: 1px solid #475569; border-radius: 6px; width: 24px; height: 24px; cursor: pointer; line-height: 1; }
+.ns-subbar { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 10px; }
+.ns-source { font-size: 11px; color: #cbd5e1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.ns-focus-pill { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #16a34a; color: #fff; white-space: nowrap; cursor: help; }
+
+.ns-lost-btn { width: 100%; background: #f59e0b; color: #0f172a; font-weight: 700; border: none; border-radius: 10px; padding: 11px; cursor: pointer; font-size: 14px; }
+.ns-lost-btn:hover { background: #fbbf24; }
+.ns-lost-btn.ns-pulse { animation: ns-pulse 1.4s ease-in-out infinite; }
+@keyframes ns-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, .7); } 50% { box-shadow: 0 0 0 9px rgba(245, 158, 11, 0); } }
+.ns-hint { margin-top: 6px; font-size: 12px; color: #fcd34d; }
+
+.ns-tabs { display: flex; gap: 4px; margin: 12px 0 8px; border-bottom: 1px solid #334155; }
+.ns-tab { background: none; border: none; color: #94a3b8; padding: 6px 10px; cursor: pointer; font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.ns-tab.ns-active { color: #38bdf8; border-bottom-color: #38bdf8; font-weight: 600; }
+.ns-count { background: #334155; color: #e2e8f0; border-radius: 999px; padding: 0 6px; font-size: 11px; }
+
+.ns-empty { color: #94a3b8; font-size: 12.5px; padding: 8px 2px; }
+.ns-loading { text-align: center; padding: 18px 6px; color: #cbd5e1; }
+.ns-spinner { width: 26px; height: 26px; margin: 0 auto 10px; border: 3px solid #334155; border-top-color: #38bdf8; border-radius: 50%; animation: ns-spin .9s linear infinite; }
+@keyframes ns-spin { to { transform: rotate(360deg); } }
+
+.ns-result { background: #1e293b; border-left: 4px solid #38bdf8; border-radius: 10px; padding: 10px 12px; }
+.ns-concept-tag { font-weight: 700; color: #38bdf8; font-size: 15px; margin-bottom: 6px; }
+.ns-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.ns-chip { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 999px; padding: 1px 9px; font-size: 11px; cursor: pointer; }
+.ns-chip-plain { cursor: default; color: #94a3b8; }
+.ns-warn { background: #422006; border: 1px solid #b45309; color: #fde68a; border-radius: 8px; padding: 8px 10px; font-size: 12px; margin: 6px 0; }
+.ns-warn-detail { margin-top: 4px; color: #fcd34d; opacity: .85; word-break: break-word; font-size: 11px; }
+.ns-quote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid #475569; color: #cbd5e1; font-style: italic; font-size: 12.5px; }
+.ns-why { font-size: 12.5px; color: #fde68a; margin: 6px 0; }
+.ns-prereq { font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+.ns-sec { margin-top: 10px; }
+.ns-sec-title { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; margin-bottom: 3px; }
+.ns-simple-text { font-size: 13.5px; line-height: 1.65; white-space: pre-line; }
+.ns-steps { margin: 0; padding-inline-start: 20px; font-size: 13px; line-height: 1.6; }
+.ns-formula { display: block; background: #0f172a; color: #86efac; padding: 6px 8px; border-radius: 6px; font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; white-space: pre-wrap; }
+.ns-visual-box svg { width: 100%; height: auto; display: block; border-radius: 10px; }
+.ns-img { max-width: 100%; max-height: 190px; border-radius: 8px; display: block; }
+.ns-cap { font-size: 11px; color: #94a3b8; margin-top: 3px; }
+.ns-answer { margin-top: 4px; padding: 6px 8px; background: #14532d; border-radius: 6px; font-size: 13px; }
+.ns-link { background: none; border: none; color: #38bdf8; cursor: pointer; padding: 2px 0; font-size: 12px; text-decoration: underline; }
+.ns-danger-link { color: #fca5a5; margin-top: 8px; display: block; }
+
+.ns-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.ns-btn { background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 8px; padding: 5px 10px; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-block; }
+.ns-btn:hover { background: #334155; }
+.ns-btn:disabled { opacity: .4; cursor: default; }
+.ns-ok { border-color: #22c55e; color: #86efac; }
+.ns-danger { border-color: #ef4444; color: #fca5a5; }
+
+.ns-hist-bar { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.ns-select-mini { background: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 8px; padding: 4px 6px; font-size: 12px; }
+.ns-hist-item { background: #1e293b; border-radius: 10px; margin-bottom: 6px; overflow: hidden; }
+.ns-hist-head { display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: none; color: inherit; text-align: left; padding: 8px 10px; cursor: pointer; }
+.ns-hist-dot { width: 9px; height: 9px; border-radius: 50%; background: #f59e0b; flex: none; }
+.ns-hist-dot.ns-done { background: #22c55e; }
+.ns-hist-title { font-weight: 600; font-size: 13px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-hist-sub { font-size: 11px; color: #94a3b8; white-space: nowrap; max-width: 40%; overflow: hidden; text-overflow: ellipsis; }
+.ns-hist-body { padding: 0 8px 10px; }
+.ns-hist-body .ns-result { border-left-width: 0; padding: 4px; background: none; }
+
+.ns-settings { margin-top: 12px; border-top: 1px solid #334155; padding-top: 8px; }
+.ns-settings summary { cursor: pointer; font-size: 12px; color: #94a3b8; }
+.ns-controls { display: flex; gap: 6px; margin: 8px 0; }
+.ns-controls select { flex: 1; min-width: 0; background: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 8px; padding: 6px; font-size: 12px; }
+.ns-cam-btn { background: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+.ns-cam-box { margin-bottom: 8px; border-radius: 8px; overflow: hidden; background: #020617; padding: 6px; }
+.ns-cam-box video { width: 100%; max-height: 130px; object-fit: cover; border-radius: 6px; transform: scaleX(-1); background: #000; display: block; }
+.ns-check { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #cbd5e1; margin: 4px 0; cursor: pointer; }
+.ns-box { background: #1e293b; border-radius: 10px; padding: 8px 10px; margin-top: 8px; }
+.ns-label { font-size: 11px; color: #94a3b8; margin-bottom: 4px; }
+.ns-subtitle { font-size: 13px; line-height: 1.55; }
+
+/* ---- Sous-titres traduits, affichés sur la vidéo ---- */
+#ns-sub-overlay { position: absolute; left: 50%; transform: translateX(-50%); z-index: 2147483000; max-width: min(86%, 900px);
+  text-align: center; pointer-events: none; font-family: system-ui, "Segoe UI", Arial, sans-serif; }
+#ns-sub-overlay.ns-sub-yt { bottom: 62px; }
+#ns-sub-overlay.ns-sub-meet { position: fixed; bottom: 170px; }
+.ns-sub-main { display: inline-block; background: rgba(8, 12, 24, .82); color: #fff; font-size: clamp(16px, 2vw, 26px); line-height: 1.4;
+  padding: 6px 14px; border-radius: 8px; font-weight: 600; }
+.ns-sub-orig { margin-top: 4px; display: inline-block; background: rgba(8, 12, 24, .6); color: #cbd5e1; font-size: clamp(11px, 1.2vw, 14px);
+  padding: 2px 10px; border-radius: 6px; }
+.ns-sub-orig:empty { display: none; }
+/* les sous-titres YouTube d'origine restent lisibles par l'extension mais ne se superposent plus aux nôtres */
+html.ns-hide-native-cc .ytp-caption-window-container { visibility: hidden !important; }
+
+/* ---- Courbe de concentration (caméra) ---- */
+.ns-curve-box { background: #1e293b; border-radius: 10px; padding: 8px 10px 6px; margin-top: 10px; }
+.ns-curve-head { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #cbd5e1; margin-bottom: 4px; }
+.ns-curve-head b { font-size: 14px; }
+.ns-curve { display: block; width: 100%; height: 120px; }
+.ns-low { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 6px; }
+.ns-low:empty { display: none; }
+.ns-low-lab { font-size: 11px; color: #fca5a5; }
+.ns-chip { background: #3f1d1d; color: #fecaca; border: 1px solid #ef4444; border-radius: 999px; padding: 1px 8px; font-size: 11px; cursor: pointer; }
+.ns-chip:hover { background: #7f1d1d; }
+.ns-chip-static { cursor: default; }
+
+.ns-focus-input { width: 100%; margin-top: 8px; background: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 8px;
+  padding: 7px 9px; font-size: 12px; }
+.ns-focus-input::placeholder { color: #94a3b8; }
+
+.ns-meet-status { padding: 6px 8px; border-radius: 8px; }
+.ns-meet-off { background: rgba(245,158,11,.12); border: 1px solid #b45309; }
+.ns-meet-on { color: #86efac; }

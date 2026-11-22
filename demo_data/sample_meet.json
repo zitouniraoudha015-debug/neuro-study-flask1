@@ -1,0 +1,8 @@
+{"title":"Cours de statistiques — scénario démo","steps":[
+{"t":0,"text":"Salam, lyoum bech nechrhou el statistiques.","subtitle":"Bonjour, aujourd'hui nous allons expliquer les statistiques.","notion":"statistiques","attention":88},
+{"t":20,"text":"Awel haja, el moyenne, hiya el valeur mta3 el wost.","subtitle":"Première notion : la moyenne est la valeur du milieu.","notion":"moyenne","attention":82},
+{"t":45,"text":"Taw el écart-type, ya3ni a9des el valeurs mbaajdin.","subtitle":"Maintenant l'écart-type : il mesure à quel point les valeurs sont dispersées.","notion":"écart-type","attention":58,"micropulse":{"phrase":"L'écart-type mesure la dispersion des valeurs.","question":"Complète : L'écart-type mesure la ___ des valeurs.","answer":"dispersion"}},
+{"t":74,"text":"Kif el corrélation négative: wa7da tla3 w el o5ra tnez.","subtitle":"Pour une corrélation négative : quand une variable monte, l'autre descend.","notion":"corrélation négative","attention":27,"lost":true,"catchup":"Le professeur définit la moyenne (valeur du milieu) puis l'écart-type (dispersion). Il explique maintenant la corrélation négative : quand l'un monte, l'autre descend."},
+{"t":95,"text":"Chnowa fhemtou? Bech na3mlou exemple.","subtitle":"Avez-vous compris ? Voici un exemple : moins on dort, plus la fatigue monte.","notion":"exemple","attention":64},
+{"t":120,"text":"Behi, el corrélation mouch dima causalité.","subtitle":"D'accord : une corrélation n'est pas toujours une causalité.","notion":"causalité","attention":79,"micropulse":{"phrase":"Corrélation n'est pas causalité.","question":"Complète : Une corrélation ne prouve pas la ___.","answer":"causalité"}}
+]}

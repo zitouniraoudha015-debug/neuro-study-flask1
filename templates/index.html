@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8f7">
+  <title>Neuro-Study — Apprendre avec son rythme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ static_v('styles.css') }}">
+</head>
+<body data-profile="standard">
+  <div id="auth-view" class="auth-view">
+    <aside class="auth-aside">
+      <a class="brand brand-light" href="#" aria-label="Neuro-Study">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>Neuro-Study</span>
+      </a>
+      <div class="auth-quote">
+        <span class="quote-kicker">VOTRE ESPACE D’APPRENTISSAGE</span>
+        <h1>Apprendre n’a pas à être une seule façon de faire.</h1>
+        <p>Des cours adaptés à votre rythme, à votre attention et à votre manière de comprendre.</p>
+      </div>
+      <div class="auth-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+    </aside>
+
+    <main class="auth-main">
+      <div class="auth-top">
+        <span id="auth-mode-label">Nouvelle étudiante ou nouvel étudiant ?</span>
+        <button id="auth-switch" class="text-button" type="button">Se connecter</button>
+      </div>
+
+      <form id="signup-form" class="auth-card" novalidate>
+        <div class="auth-heading">
+          <span class="eyebrow">CRÉER MON COMPTE</span>
+          <h2>Bienvenue sur Neuro-Study</h2>
+          <p>Quelques informations pour personnaliser votre apprentissage.</p>
+        </div>
+
+        <div class="form-grid two">
+          <label>Nom d’utilisateur
+            <input id="signup-username" name="username" autocomplete="username" required minlength="3" placeholder="Votre prénom ou pseudo">
+          </label>
+          <label>Style d’apprentissage
+            <select id="signup-style" name="style">
+              <option value="visuel">Visuel</option>
+              <option value="auditif">Auditif</option>
+              <option value="lecture">Lecture / écriture</option>
+              <option value="pratique">Pratique</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-grid two">
+          <label>Mot de passe
+            <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="6" placeholder="Au moins 6 caractères">
+          </label>
+          <label>Confirmer le mot de passe
+            <input id="signup-confirm" name="confirm" type="password" autocomplete="new-password" required placeholder="Retapez le mot de passe">
+          </label>
+        </div>
+
+        <fieldset class="profile-fieldset">
+          <legend>Choisissez votre profil</legend>
+          <p class="profile-intro">Le profil adapte la présentation et l’expérience de lecture.</p>
+          <div id="profile-cards" class="profile-cards"></div>
+        </fieldset>
+
+        <p id="signup-error" class="form-error" role="alert"></p>
+        <button class="primary-button auth-submit" type="submit">Créer mon espace <span aria-hidden="true">→</span></button>
+        <button id="guest-entry" class="secondary-button auth-submit" type="button">Continuer en mode invité</button>
+      </form>
+
+      <form id="login-form" class="auth-card" novalidate hidden>
+        <div class="auth-heading">
+          <span class="eyebrow">BON RETOUR</span>
+          <h2>Heureux de vous revoir</h2>
+          <p>Retrouvez votre profil, vos préférences et vos cours.</p>
+        </div>
+        <label>Nom d’utilisateur
+          <input id="login-username" autocomplete="username" required placeholder="Votre nom d’utilisateur">
+        </label>
+        <label>Mot de passe
+          <input id="login-password" type="password" autocomplete="current-password" required placeholder="Votre mot de passe">
+        </label>
+        <p id="login-error" class="form-error" role="alert"></p>
+        <button class="primary-button auth-submit" type="submit">Se connecter <span aria-hidden="true">→</span></button>
+        <button id="login-guest" class="secondary-button auth-submit" type="button">Continuer en invité</button>
+      </form>
+    </main>
+  </div>
+
+  <div id="app-view" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="#" data-view="dashboard" aria-label="Neuro-Study">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>Neuro-Study</span>
+      </a>
+      <nav class="side-nav" aria-label="Navigation principale">
+        <button class="active" data-view="dashboard"><span class="nav-icon">⌂</span><span>Tableau de bord</span></button>
+        <button data-view="reader"><span class="nav-icon">▤</span><span>Mes cours</span></button>
+        <button data-view="live"><span class="nav-icon">◉</span><span>Cours en direct</span></button>
+        <button data-view="tools"><span class="nav-icon">✦</span><span>Outils</span></button>
+        <button data-view="review"><span class="nav-icon">✓</span><span>Bilan</span></button>
+        <button data-view="demo"><span class="nav-icon">▷</span><span>Mode démo</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button data-view="settings"><span class="nav-icon">⚙</span><span>Préférences</span></button>
+        <div class="user-chip">
+          <div class="avatar" id="nav-avatar">É</div>
+          <div><strong id="nav-username">Étudiante invitée</strong><small id="nav-profile">Profil Standard</small></div>
+          <button id="logout-button" class="icon-button" type="button" title="Se déconnecter" aria-label="Se déconnecter">↪</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <header class="app-header">
+        <button id="menu-button" class="icon-button mobile-menu" type="button" aria-label="Ouvrir le menu">☰</button>
+        <div>
+          <span id="header-date" class="header-date"></span>
+          <h1 id="page-title">Bonjour</h1>
+        </div>
+        <div class="header-actions">
+          <span id="profile-pill" class="profile-pill">Standard</span>
+          <button id="header-settings" class="icon-button" type="button" title="Préférences">⚙</button>
+        </div>
+      </header>
+
+      <section id="view-dashboard" class="app-view-section">
+        <div class="dashboard-grid">
+          <div class="dashboard-primary">
+            <article class="hero-card">
+              <div>
+                <span class="eyebrow">AUJOURD’HUI</span>
+                <h2 id="welcome-title">Prête à apprendre ?</h2>
+                <p id="welcome-copy">Votre espace est prêt pour votre prochaine séance.</p>
+              </div>
+              <button class="primary-button" data-view="reader">Commencer un cours <span>→</span></button>
+            </article>
+
+            <div class="section-heading">
+              <div><span class="eyebrow">CONTENU</span><h2>Ajouter un cours</h2></div>
+            </div>
+            <div id="dashboard-drop" class="dashboard-upload">
+              <div class="upload-symbol">↑</div>
+              <div><strong>Importer un cours PDF</strong><p>Glissez votre fichier ici ou parcourez vos documents.</p></div>
+              <button id="dashboard-browse" class="secondary-button" type="button">Choisir un fichier</button>
+              <input id="dashboard-file" type="file" accept=".pdf,.txt" hidden>
+            </div>
+            <button id="dashboard-demo" class="demo-link" type="button"><span>▶</span><span><strong>Découvrir avec un cours d’exemple</strong><small>Biologie — La photosynthèse</small></span><span>→</span></button>
+
+            <div class="section-heading">
+              <div><span class="eyebrow">REPRISE RAPIDE</span><h2>Dernières activités</h2></div>
+            </div>
+            <div id="recent-list" class="recent-list"></div>
+          </div>
+
+          <aside class="dashboard-secondary">
+            <article class="preference-card">
+              <span class="eyebrow">MON PROFIL</span>
+              <div class="preference-profile"><div id="profile-icon" class="profile-icon">S</div><div><strong id="selected-profile-name">Standard</strong><span id="selected-profile-label">Apprentissage équilibré</span></div></div>
+              <p id="selected-profile-help"></p>
+              <button class="ghost-button" data-view="settings">Modifier mes préférences</button>
+            </article>
+            <article class="learning-card">
+              <span class="eyebrow">MON STYLE</span>
+              <div class="learning-orb" id="style-orb">V</div>
+              <strong id="selected-style-name">Visuel</strong>
+              <p id="selected-style-help"></p>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="view-reader" class="app-view-section" hidden>
+        <div class="reader-layout">
+          <aside class="course-panel">
+            <div class="course-panel-head"><div><span class="eyebrow">COURS</span><h2 id="course-name">Aucun cours ouvert</h2></div></div>
+            <div id="course-outline" class="course-outline">
+              <div class="empty-outline"><span>▤</span><p>Importez un PDF ou chargez le cours d’exemple.</p></div>
+            </div>
+          </aside>
+          <div class="reader-main">
+            <div id="reader-empty" class="reader-empty">
+              <div class="reader-empty-icon">▤</div>
+              <h2>Votre prochain cours commence ici</h2>
+              <p>Importez un PDF ou chargez notre cours d’exemple. Les notions seront organisées en blocs faciles à lire.</p>
+              <div class="empty-actions">
+                <button id="reader-browse" class="primary-button" type="button">Importer un PDF</button>
+                <input id="reader-file" type="file" accept=".pdf,.txt" hidden>
+                <button id="reader-demo" class="secondary-button" type="button">Cours d’exemple</button>
+              </div>
+            </div>
+            <div id="reader-loading" class="reader-loading" hidden><div class="loading-ring"></div><strong>Préparation des notions…</strong><p>Extraction et découpage du cours</p></div>
+            <div id="reader-content" hidden>
+              <div class="reader-toolbar">
+                <div><span class="eyebrow">PROGRESSION</span><strong id="reader-progress-text">Notion 1 sur 1</strong></div>
+                <div class="progress-track"><span id="reader-progress"></span></div>
+                <div class="reader-toolbar-tools">
+                  <label class="text-size-control only-dyslexie">Taille du texte
+                    <input id="dyslexia-text-size" type="range" min="17" max="24" step="1" value="19" aria-label="Taille du texte">
+                  </label>
+                  <span id="audio-status" class="audio-status" aria-live="polite">Audio arrêté</span>
+                </div>
+              </div>
+              <article id="reader-chunk" class="reader-chunk"></article>
+              <div class="reader-navigation">
+                <button id="reader-prev" class="secondary-button" type="button">← Notion précédente</button>
+                <button id="reader-next" class="primary-button" type="button">Notion suivante →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-live" class="app-view-section" hidden>
+        <div class="section-heading"><div><span class="eyebrow">COURS EN DIRECT</span><h2>Suivre une vidéo ou une réunion</h2></div></div>
+        <div class="live-grid">
+          <div>
+            <article class="card-panel"><div class="card-panel-head"><h3>Source du cours</h3><span id="live-status" class="status-dot">Prêt</span></div>
+              <div class="inline-form"><input id="yt-url" type="url" placeholder="Lien YouTube"><button id="yt-load" class="primary-button" type="button">Charger</button></div>
+              <div id="yt-paste-box" class="paste-box" hidden><textarea id="yt-paste" rows="4" placeholder="Collez ici une transcription"></textarea><button id="yt-paste-ok" class="secondary-button" type="button">Utiliser</button></div>
+              <div id="yt-wrap" hidden><div id="yt-player"></div></div>
+              <video id="cam-video" muted playsinline hidden></video>
+              <div class="action-row"><button id="mic-button" class="secondary-button" type="button">Démarrer le micro</button><button id="cam-button" class="secondary-button" type="button">Activer la caméra</button></div>
+            </article>
+          </div>
+          <aside><article class="card-panel"><h3>Aide immédiate</h3><div class="action-stack"><button id="catch-button" class="primary-button" type="button">Catch-Up 15 s</button><button id="lost-button" class="secondary-button" type="button">Je suis perdu</button><button id="pulse-button" class="secondary-button only-tdah" type="button">Micro-Pulse</button></div><div id="live-help"></div></article><article class="card-panel"><h3>Attention estimée</h3><canvas id="curve" height="170"></canvas></article></aside>
+        </div>
+      </section>
+
+      <section id="view-tools" class="app-view-section" hidden>
+        <div class="section-heading"><div><span class="eyebrow">OUTILS</span><h2>Aller plus loin dans l’apprentissage</h2></div></div>
+        <div class="tools-grid">
+          <article class="card-panel"><h3>Décomposer une consigne</h3><textarea id="task-input" rows="4" placeholder="Collez la consigne du professeur…"></textarea><button id="task-button" class="primary-button" type="button">Créer la checklist</button><ol id="task-output"></ol></article>
+          <article class="card-panel"><h3>Trouver les prérequis</h3><textarea id="gap-input" rows="4" placeholder="Collez un passage du cours…"></textarea><button id="gap-button" class="primary-button" type="button">Chercher les prérequis</button><div id="gap-output"></div></article>
+        </div>
+      </section>
+
+      <section id="view-review" class="app-view-section" hidden>
+        <div class="section-heading"><div><span class="eyebrow">BILAN</span><h2>Ce qu’il faut revoir</h2></div><button id="review-load" class="secondary-button" type="button">Actualiser</button></div>
+        <div id="review-output"></div>
+      </section>
+
+      <section id="view-demo" class="app-view-section" hidden>
+        <article class="demo-card"><span class="eyebrow">MODE DÉMO</span><h2>Expérimentez Neuro-Study hors ligne</h2><p>La démonstration rejoue sous-titres, attention, Catch-Up et Micro-Pulse sans API ni caméra.</p><div class="action-row"><button id="demo-play" class="primary-button" type="button">Lecture</button><button id="demo-pause" class="secondary-button" type="button">Pause</button><button id="demo-next" class="secondary-button" type="button">Suivant</button><button id="demo-reset" class="ghost-button" type="button">Recommencer</button></div></article>
+      </section>
+
+      <section id="view-settings" class="app-view-section" hidden>
+        <div class="section-heading"><div><span class="eyebrow">PRÉFÉRENCES</span><h2>Mon profil d’apprentissage</h2></div></div>
+        <div class="settings-grid"><fieldset class="profile-fieldset"><legend>Profil neuro</legend><div id="settings-profile-cards" class="profile-cards"></div></fieldset><article class="card-panel"><h3>Style d’apprentissage</h3><div id="settings-style-cards" class="style-cards"></div></article></div>
+        <article class="danger-card"><div><h3>Compte local</h3><p>Supprimer votre compte efface vos informations et votre session du navigateur.</p></div><button id="delete-account" class="danger-button" type="button">Supprimer mon compte</button></article>
+      </section>
+    </main>
+  </div>
+
+  <div id="pause-overlay" hidden><p>Faites une courte pause.</p><strong><span id="pause-left">30</span> secondes</strong><button id="pause-end" class="primary-button" type="button">Reprendre</button></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="{{ static_v('camera_tracker.js') }}"></script>
+  <script src="{{ static_v('app.js') }}"></script>
+</body>
+</html>

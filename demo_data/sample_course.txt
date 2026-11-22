@@ -1,0 +1,9 @@
+1. La corrélation
+
+La corrélation mesure le lien entre deux variables. Une corrélation positive signifie que lorsque la première variable augmente, la seconde augmente aussi. Par exemple, plus un étudiant révise, plus sa note a tendance à monter.
+
+Une corrélation négative signifie que lorsque l'une des variables augmente, l'autre diminue. Par exemple, plus on dort peu, plus la fatigue augmente. Attention : une corrélation ne prouve pas une causalité.
+
+2. La dispersion des valeurs
+
+L'écart-type indique à quel point les valeurs sont dispersées autour de la moyenne. Un écart-type faible montre que les valeurs sont proches de la moyenne, tandis qu'un écart-type élevé montre des valeurs très étalées.
